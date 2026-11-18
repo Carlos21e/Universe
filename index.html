@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Universe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Playfair+Display:ital,wght@1,500&family=Unbounded:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--ink:#f5f5f7;--mute:#9a9aa5;--card:#0e0e12;--line:#24242c;
+--c1:#f5f5f7;--c2:#f5f5f7;--c3:#f5f5f7;--c4:#f5f5f7;--c5:#f5f5f7;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="light"]{--bg:#f5f5f7;--ink:#111114;--mute:#55555f;--card:#ffffff;--line:#dcdce2;--c1:#111114;--c2:#111114;--c3:#111114;--c4:#111114;--c5:#111114}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Lora,Georgia,"Times New Roman",serif;line-height:1.55;min-height:100vh}
+.wrap{max-width:960px;margin:0 auto;padding:28px 20px 60px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-weight:800;font-size:1.05rem;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:10px}
+.logo i{width:22px;height:22px;border-radius:50%;background:var(--c4);position:relative;display:inline-block}
+.logo i::after{content:"";position:absolute;left:-5px;top:9px;width:32px;height:4px;border-radius:4px;background:var(--c3);transform:rotate(-20deg)}
+h1{font-size:clamp(2.4rem,8vw,4.4rem);line-height:1.05;margin:44px 0 12px;font-weight:700;letter-spacing:-.01em;background:linear-gradient(90deg,var(--ink),var(--mute),var(--ink));background-size:200% auto;animation:shine 7s linear infinite;-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--mute);max-width:46ch;margin:0 0 24px}
+input[type=search]{width:100%;max-width:460px;padding:14px 18px;border-radius:999px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit}
+input[type=search]:focus,a:focus-visible,button:focus-visible{outline:3px solid var(--c5);outline-offset:3px}
+.planets{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px;margin-top:36px}
+.planet{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;aspect-ratio:1;border-radius:50%;color:var(--ink);background:var(--card);border:1px solid var(--line);text-decoration:none;font-weight:600;font-size:1rem;padding:14px;transition:transform .2s,filter .2s;animation:pop .6s cubic-bezier(.2,.9,.3,1.3) backwards,float 5s ease-in-out infinite;animation-delay:calc(var(--i,0)*.1s),calc(var(--i,0)*-1s)}
+.planet:hover{transform:translateY(-6px) scale(1.06);border-color:var(--ink);box-shadow:0 0 40px -10px var(--ink)}
+.planet span{font-size:2.2rem;line-height:1.1}
+.planet small{font-weight:400;opacity:.9;font-size:.78rem}
+.results{margin-top:28px;display:grid;gap:10px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;transition:transform .2s,border-color .2s;animation:up .45s backwards}
+.item h3{margin:0 0 4px;font-size:1.05rem}
+.item p{margin:0;color:var(--mute);font-size:.93rem}
+.item a{color:var(--c5);font-size:.85rem;text-decoration:none;font-weight:600}
+.back{display:inline-block;margin:34px 0 0;color:var(--mute);text-decoration:none;font-weight:600}
+.page-title{display:flex;align-items:center;gap:16px;margin:14px 0 8px}
+.page-title b{width:64px;height:64px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-size:1.9rem;flex:none}
+.page-title h2{font-size:clamp(1.9rem,6vw,3rem);margin:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:22px}
+.grid .item{border-top:1px solid var(--line)}
+.empty{color:var(--mute);margin-top:20px}
+.item{display:block;color:inherit;text-decoration:none}
+.item small{color:var(--mute);font-size:.8rem}
+.path{color:var(--mute);font-size:.85rem;margin:0 0 8px}
+.why{display:inline-block;margin-bottom:28px;padding:12px 28px;border:1px solid var(--ink);border-radius:999px;color:var(--ink);text-decoration:none;font-weight:600;font-size:.95rem;transition:background .2s,color .2s}
+.why:hover{background:var(--ink);color:var(--bg)}
+.manifesto{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:clamp(1.3rem,4.5vw,1.9rem);line-height:1.5;max-width:640px;margin:18px 0 0}
+.sub{font-size:1.4rem;margin:48px 0 20px}
+.q{border-left:2px solid var(--line);padding:2px 0 2px 16px;margin:0 0 20px;max-width:640px}
+.q p{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:1.2rem;line-height:1.4;margin:0 0 4px}
+.q cite{color:var(--mute);font-size:.85rem;font-style:normal}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:radial-gradient(1.5px 1.5px at 20px 30px,#fff,transparent),radial-gradient(1px 1px at 90px 140px,#fff,transparent),radial-gradient(1.5px 1.5px at 160px 70px,#fff,transparent),radial-gradient(1px 1px at 230px 190px,#fff,transparent);background-size:260px 230px;opacity:.5;animation:twinkle 6s ease-in-out infinite alternate}
+@keyframes twinkle{from{opacity:.2}to{opacity:.65}}
+@keyframes pop{from{opacity:0;scale:.5}}
+@keyframes float{50%{translate:0 -10px}}
+@keyframes up{from{opacity:0;translate:0 14px}}
+@keyframes shine{to{background-position:200% center}}
+@keyframes drift{to{translate:40vw 20vh}}
+body::after{content:"";position:fixed;width:60vmax;height:60vmax;left:-20vmax;top:-30vmax;z-index:-1;pointer-events:none;background:radial-gradient(circle,rgba(255,255,255,.07),transparent 65%);animation:drift 18s ease-in-out infinite alternate}
+:root[data-theme="light"] body::before,:root[data-theme="light"] body::after{display:none}
+.item:hover{transform:translateY(-4px);border-color:var(--cat,var(--line))}
+footer{margin-top:60px;text-align:center;color:var(--mute);font-size:.8rem}
+footer p{margin:0 0 14px;color:var(--ink);font-size:.95rem}
+.corner{position:fixed;right:14px;bottom:calc(10px + env(safe-area-inset-bottom,0px));font-size:.75rem;color:var(--mute);letter-spacing:.05em;pointer-events:none;z-index:5}
+h1,h2{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:500}
+.logo{font-family:Unbounded,Inter,sans-serif;font-style:normal;font-weight:700}
+@media (prefers-reduced-motion:reduce){*,body::before,body::after{animation:none!important;transition:none!important}}
+button.theme{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font:inherit;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<a class="logo" href="#"><i></i>Universe</a>
+<button class="theme" id="theme" type="button">Cambiar tema</button>
+</header>
+<main id="app"></main>
+<div class="corner">◇C.E.</div>
+<footer><div><a class="why" href="#porque">¿Por qué Universe?</a></div><p>Everything you want to discover, in one place.<br>Todo lo que quieres descubrir, en un solo lugar.</p>© 2026 Universe</footer>
+</div>
+<script>
+var CATS={
+deportes:{n:"Deportes",e:"⚽",c:"var(--c1)",d:"Disciplinas para ver y practicar.",items:[
+["Fútbol","El deporte más popular del mundo: dos equipos de once jugadores."],
+["Baloncesto","Se juega con canastas a 3,05 metros de altura. Nació en 1891."],
+["Tenis","Individual o dobles, en cancha de arcilla, césped o dura."],
+["Natación","Cuatro estilos: libre, espalda, pecho y mariposa."],
+["Ciclismo","Ruta, pista y montaña. El Tour de Francia es su gran carrera."],
+["Béisbol","Bate, bola y bases. Muy popular en América y Japón."],
+["Voleibol","Dos equipos separados por una red; gana quien deja caer el balón en el campo rival."],
+["Atletismo","Carreras, saltos y lanzamientos: la base de los Juegos Olímpicos."],
+["Boxeo","Combate por rondas con guantes que exige técnica y resistencia."],
+["Golf","Se embocan pelotas en 18 hoyos con el menor número de golpes."]]},
+lugares:{n:"Lugares para visitar",e:"🌍",c:"var(--c2)",d:"Destinos para tu próxima aventura.",items:[
+["Machu Picchu, Perú","Ciudad inca del siglo XV, en lo alto de los Andes."],
+["París, Francia","La Torre Eiffel, el Louvre y los cafés junto al Sena."],
+["Kioto, Japón","Más de mil templos y barrios de casas tradicionales."],
+["Nueva York, EE. UU.","Central Park, Broadway y rascacielos en cada esquina."],
+["Cancún, México","Playas de arena blanca y ruinas mayas cercanas."],
+["Roma, Italia","El Coliseo, el Vaticano y mucha historia a pie."],
+["Santorini, Grecia","Casas blancas y cúpulas azules frente al mar Egeo."],
+["Río de Janeiro, Brasil","Las playas de Copacabana e Ipanema y el Cristo Redentor."],
+["Dubái, Emiratos Árabes","Rascacielos como el Burj Khalifa y desierto a minutos."],
+["Islandia","Volcanes, cascadas, géiseres y auroras boreales."]]},
+comidas:{n:"Comidas",e:"🍕",c:"var(--c3)",d:"Platos de distintos rincones del mundo.",items:[
+["Tacos","Tortilla de maíz con carne, cebolla, cilantro y salsa."],
+["Sushi","Arroz avinagrado con pescado, mariscos o verduras."],
+["Pizza","Masa horneada con tomate y queso. Nació en Nápoles."],
+["Paella","Arroz con azafrán, típico de Valencia, España."],
+["Ceviche","Pescado crudo marinado en limón, plato clásico de Perú."],
+["Arepas","Panecillos de maíz rellenos, típicos de Venezuela y Colombia."],
+["Hamburguesa","Carne en pan con queso y vegetales, clásico de EE. UU."],
+["Ramen","Fideos en caldo caliente con huevo y cerdo, de Japón."],
+["Empanadas","Masa rellena, horneada o frita, típica de toda Latinoamérica."],
+["Lasaña","Capas de pasta, carne, salsa y queso gratinado, de Italia."]]},
+videojuegos:{n:"Videojuegos",e:"🎮",c:"var(--c4)",d:"Títulos para jugar solo o en grupo.",items:[
+["Minecraft","Construye y explora un mundo de bloques sin límites."],
+["The Legend of Zelda","Aventura y puzles en el reino de Hyrule."],
+["EA Sports FC","Simulador de fútbol con ligas y equipos reales."],
+["Fortnite","Battle royale con construcción y eventos en vivo."],
+["Celeste","Plataformas exigentes sobre escalar una montaña."],
+["Elden Ring","Mundo abierto de fantasía oscura y combates difíciles."],
+["Super Mario Bros.","El plataformas clásico con el fontanero más famoso."],
+["Among Us","Tripulantes e impostores dentro de una nave espacial."],
+["Rocket League","Fútbol jugado con autos que saltan y vuelan."],
+["Grand Theft Auto V","Mundo abierto de acción y crimen en la ciudad de Los Santos."]]},
+empresas:{n:"Empresas",e:"🏢",c:"var(--c5)",d:"Compañías que marcan el día a día.",items:[
+["Apple","Tecnología: iPhone, Mac y servicios digitales."],
+["Google","Buscador, Android, YouTube y computación en la nube."],
+["Toyota","Una de las mayores fabricantes de automóviles del mundo."],
+["Nike","Ropa y calzado deportivo, fundada en 1964."],
+["Amazon","Comercio electrónico, logística y servicios en la nube."],
+["Samsung","Móviles, televisores y chips de memoria."],
+["Tesla","Autos eléctricos, baterías y energía solar."],
+["Netflix","Series y películas por suscripción."],
+["Coca-Cola","Bebidas conocidas en más de 200 países."],
+["Adidas","Ropa y calzado deportivo de origen alemán."]]},
+calzado:{n:"Calzado",e:"👟",c:"var(--c1)",d:"Zapatos para cada ocasión.",items:[
+["Zapatillas deportivas","Para correr, entrenar y usar a diario."],
+["Botas","De cuero o de trabajo, resisten lluvia y terreno duro."],
+["Sandalias","Ligeras y abiertas, ideales para el calor."],
+["Mocasines","Sin cordones, cómodos y de aire elegante."],
+["Tacones","Calzado de vestir con la suela elevada."],
+["Botines de fútbol","Con tacos para jugar en césped natural o sintético."],
+["Zapatos oxford","De cordones cerrados, el clásico del traje formal."],
+["Chancletas","Para la playa y la piscina."],
+["Botas de montaña","Suela firme y buen soporte para caminar por senderos."],
+["Alpargatas","Suela de yute y tela, frescas para el verano."]]},
+dispositivos:{n:"Dispositivos",e:"📱",c:"var(--c2)",d:"Tecnología para el trabajo y el ocio.",items:[
+["Smartphones","Llamadas, cámara, apps y acceso a internet en el bolsillo."],
+["Laptops","Computadoras portátiles para estudiar, trabajar y crear."],
+["Tablets","Pantalla táctil grande para leer, dibujar y ver series."],
+["Smartwatches","Relojes que miden actividad y muestran notificaciones."],
+["Audífonos inalámbricos","Música y llamadas sin cables, algunos con cancelación de ruido."],
+["Consolas de videojuegos","PlayStation, Xbox y Nintendo Switch para jugar en casa."],
+["Cámaras digitales","Fotos y video con lentes intercambiables."],
+["Altavoces inteligentes","Responden a la voz y controlan los aparatos de la casa."],
+["Monitores","Pantallas externas para trabajar o jugar."],
+["Teclados mecánicos","Teclas con interruptores individuales, precisas y duraderas."]]},
+arte:{n:"Arte",e:"🎨",c:"var(--c3)",d:"Formas de expresión visual.",items:[
+["Pintura","Óleo, acuarela o acrílico sobre lienzo, papel o pared."],
+["Escultura","Obras en tres dimensiones hechas en piedra, metal o arcilla."],
+["Fotografía","Capturar imágenes con luz, encuadre y composición."],
+["Dibujo","Lápiz, carboncillo o tinta sobre papel."],
+["Arte digital","Ilustración y diseño hechos con tableta o computadora."],
+["Grafiti","Arte urbano con aerosol y plantillas en muros de la ciudad."],
+["Cerámica","Piezas de barro moldeadas y cocidas al horno."],
+["Collage","Recortes de papel, tela y fotos combinados en una sola obra."],
+["Caligrafía","Escritura decorativa hecha con pluma o pincel."],
+["Tatuaje","Diseños permanentes dibujados sobre la piel."]]},
+planetas:{n:"Planetas",e:"🪐",c:"var(--c4)",d:"Mundos del sistema solar y más allá.",items:[
+["Mercurio","El más cercano al Sol y el más pequeño del sistema solar."],
+["Venus","El planeta más caliente, con nubes de ácido sulfúrico."],
+["Tierra","Nuestro hogar y el único mundo conocido con vida."],
+["Marte","El planeta rojo, con el volcán más alto del sistema solar."],
+["Júpiter","El gigante del sistema solar, con la Gran Mancha Roja."],
+["Saturno","Famoso por sus anillos de hielo y roca."],
+["Urano","Gigante helado que gira inclinado de lado."],
+["Neptuno","El más lejano, con vientos de más de 2000 km/h."],
+["Plutón","Planeta enano en el borde del sistema solar."],
+["Exoplanetas","Mundos que orbitan otras estrellas fuera de nuestro sistema."]]},
+ias:{n:"IAs",e:"🤖",c:"var(--c5)",d:"Inteligencias artificiales para conversar, crear y buscar.",items:[
+["ChatGPT","Asistente conversacional de OpenAI."],
+["Claude","Asistente de IA creado por Anthropic."],
+["Gemini","Modelo de IA de Google para texto, imágenes y más."],
+["Copilot","Asistente de IA de Microsoft integrado en Windows y Office."],
+["Midjourney","Genera imágenes a partir de descripciones de texto."],
+["Perplexity","Buscador con IA que responde citando fuentes."],
+["Llama","Familia de modelos de Meta, con versiones abiertas."],
+["DeepSeek","Modelos de IA de una empresa china, conocidos por su bajo costo."],
+["Suno","Crea canciones completas a partir de una descripción."],
+["Stable Diffusion","Modelo abierto para generar imágenes con IA."]]}
+};
+var SUB={
+"Fútbol":"Real Madrid|FC Barcelona|Manchester City|Boca Juniors",
+"Baloncesto":"Los Angeles Lakers|Chicago Bulls|Boston Celtics|Golden State Warriors",
+"Tenis":"Wimbledon|Roland Garros|US Open|Abierto de Australia",
+"Natación":"Michael Phelps|Katie Ledecky|Mundial de Natación|Natación artística",
+"Ciclismo":"Tour de Francia|Giro de Italia|Vuelta a España|Tadej Pogačar",
+"Béisbol":"New York Yankees|Los Angeles Dodgers|Boston Red Sox|Serie Mundial",
+"Voleibol":"Liga de Naciones|Voleibol de playa|Mundial de Voleibol|Voleibol olímpico",
+"Atletismo":"Usain Bolt|Diamond League|Maratón de Boston|Maratón de Nueva York",
+"Boxeo":"Muhammad Ali|Canelo Álvarez|Mike Tyson|Floyd Mayweather",
+"Golf":"The Masters|Tiger Woods|Rory McIlroy|Ryder Cup",
+"Machu Picchu, Perú":"Camino Inca|Valle Sagrado|Cusco|Huayna Picchu",
+"París, Francia":"Torre Eiffel|Museo del Louvre|Notre Dame|Montmartre",
+"Kioto, Japón":"Fushimi Inari|Kinkaku-ji|Bosque de bambú de Arashiyama|Barrio de Gion",
+"Nueva York, EE. UU.":"Estatua de la Libertad|Central Park|Times Square|Puente de Brooklyn",
+"Cancún, México":"Isla Mujeres|Chichén Itzá|Playa Delfines|Xcaret",
+"Roma, Italia":"Coliseo|Fontana de Trevi|Vaticano|Panteón",
+"Santorini, Grecia":"Oia|Fira|Playa Roja|Akrotiri",
+"Río de Janeiro, Brasil":"Cristo Redentor|Pan de Azúcar|Copacabana|Ipanema",
+"Dubái, Emiratos Árabes":"Burj Khalifa|Dubai Mall|Palm Jumeirah|Desierto de Dubái",
+"Islandia":"Laguna Azul|Cascada Gullfoss|Círculo Dorado|Playa de arena negra",
+"Tacos":"Tacos al pastor|Tacos de birria|Tacos de carnitas|Tacos de pescado",
+"Sushi":"Nigiri|Maki|Sashimi|California roll",
+"Pizza":"Domino’s Pizza|Pizza Hut|Papa John’s|Little Caesars",
+"Paella":"Paella valenciana|Paella de mariscos|Paella mixta|Arroz negro",
+"Ceviche":"Ceviche clásico|Ceviche mixto|Leche de tigre|Tiradito",
+"Arepas":"Reina pepiada|Arepa de queso|Arepa de pernil|Arepa de pollo",
+"Hamburguesa":"McDonald’s|Burger King|Five Guys|Shake Shack",
+"Ramen":"Ramen shoyu|Ramen miso|Ramen tonkotsu|Ichiran",
+"Empanadas":"Empanadas de carne|Empanadas de queso|Empanadas de pollo|Empanadas de viento",
+"Lasaña":"Lasaña boloñesa|Lasaña de espinacas|Lasaña vegetariana|Lasaña blanca",
+"Minecraft":"Modo supervivencia|Modo creativo|Minecraft Realms|Minecraft Education",
+"The Legend of Zelda":"Breath of the Wild|Tears of the Kingdom|Ocarina of Time|Link’s Awakening",
+"EA Sports FC":"Ultimate Team|Modo Carrera|Clubes Pro|Volta Football",
+"Fortnite":"Battle Royale|Modo Creativo|Fortnite Festival|LEGO Fortnite",
+"Celeste":"Madeline|Cumbre del Celeste|Lados B|Modo asistencia",
+"Elden Ring":"Shadow of the Erdtree|Malenia|Las Tierras Intermedias|Árbol Áureo",
+"Super Mario Bros.":"Super Mario Odyssey|Mario Kart|Super Mario Bros. Wonder|Super Mario 64",
+"Among Us":"Impostor|Mapa The Skeld|Mapa Polus|Mapa Mira HQ",
+"Rocket League":"Rocket League Sideswipe|Competitivo|Modo Rumble|Torneos RLCS",
+"Grand Theft Auto V":"Modo historia|GTA Online|Los Santos|Franklin Clinton",
+"Apple":"iPhone|MacBook|Apple Watch|AirPods",
+"Google":"Google Maps|YouTube|Android|Gmail",
+"Toyota":"Corolla|Hilux|Prius|Land Cruiser",
+"Nike":"Air Jordan|Air Force 1|Air Max|Nike Dunk",
+"Amazon":"Amazon Prime|AWS|Kindle|Alexa",
+"Samsung":"Galaxy S|Galaxy Z Fold|Smart TV QLED|Galaxy Watch",
+"Tesla":"Model 3|Model Y|Cybertruck|Powerwall",
+"Netflix":"Stranger Things|Squid Game|The Crown|Bridgerton",
+"Coca-Cola":"Coca-Cola Zero|Sprite|Fanta|Powerade",
+"Adidas":"Ultraboost|Superstar|Stan Smith|Samba",
+"Zapatillas deportivas":"Nike|Adidas|Puma|New Balance",
+"Botas":"Timberland|Dr. Martens|Caterpillar|Botas Chelsea",
+"Sandalias":"Birkenstock|Teva|Chaco|Sandalias romanas",
+"Mocasines":"Gucci|Tod’s|Clarks|Sebago",
+"Tacones":"Louboutin|Jimmy Choo|Manolo Blahnik|Steve Madden",
+"Botines de fútbol":"Nike Mercurial|Adidas Predator|Puma Future|Adidas Copa",
+"Zapatos oxford":"Church’s|Allen Edmonds|Clarks|Cole Haan",
+"Chancletas":"Havaianas|Crocs|Adidas Adilette|Nike Victori One",
+"Botas de montaña":"Salomon|Merrell|La Sportiva|The North Face",
+"Alpargatas":"Toms|Castañer|Espadrilles de yute|Alpargatas de lona",
+"Smartphones":"iPhone|Samsung Galaxy|Google Pixel|Xiaomi",
+"Laptops":"MacBook Air|Dell XPS|Lenovo ThinkPad|HP Spectre",
+"Tablets":"iPad|Samsung Galaxy Tab|Microsoft Surface|Amazon Fire",
+"Smartwatches":"Apple Watch|Galaxy Watch|Garmin|Fitbit",
+"Audífonos inalámbricos":"AirPods|Sony WH-1000XM5|Bose QuietComfort|Galaxy Buds",
+"Consolas de videojuegos":"PlayStation 5|Xbox Series X|Nintendo Switch|Steam Deck",
+"Cámaras digitales":"Canon EOS|Sony Alpha|Nikon Z|Fujifilm X",
+"Altavoces inteligentes":"Amazon Echo|Google Nest|Apple HomePod|Sonos",
+"Monitores":"LG UltraGear|Samsung Odyssey|Dell UltraSharp|ASUS ROG",
+"Teclados mecánicos":"Logitech G|Keychron|Razer BlackWidow|Corsair K70",
+"Pintura":"Vincent van Gogh|Pablo Picasso|Frida Kahlo|Claude Monet",
+"Escultura":"El David|El Pensador|Venus de Milo|La Piedad",
+"Fotografía":"Ansel Adams|Annie Leibovitz|Henri Cartier-Bresson|National Geographic",
+"Dibujo":"Leonardo da Vinci|Albrecht Dürer|Rembrandt|Manga",
+"Arte digital":"Procreate|Adobe Photoshop|Blender|Krita",
+"Grafiti":"Banksy|Keith Haring|Jean-Michel Basquiat|Shepard Fairey",
+"Cerámica":"Talavera|Porcelana de Sèvres|Raku|Cerámica japonesa",
+"Collage":"Henri Matisse|Hannah Höch|Romare Bearden|Kurt Schwitters",
+"Caligrafía":"Caligrafía árabe|Caligrafía china|Caligrafía gótica|Shodo japonés",
+"Tatuaje":"Tatuaje japonés|Tatuaje tradicional americano|Tatuaje maorí|Tatuaje de línea fina",
+"Mercurio":"Cráter Caloris|Misión MESSENGER|Misión BepiColombo|Temperaturas extremas",
+"Venus":"Misión Magallanes|Atmósfera de Venus|Misión Venera|Tránsito de Venus",
+"Tierra":"La Luna|Océano Pacífico|Campo magnético|Estación Espacial Internacional",
+"Marte":"Monte Olimpo|Rover Perseverance|Rover Curiosity|Valles Marineris",
+"Júpiter":"Gran Mancha Roja|Europa|Ganímedes|Misión Juno",
+"Saturno":"Anillos de Saturno|Titán|Encélado|Misión Cassini",
+"Urano":"Anillos de Urano|Titania|Miranda|Voyager 2",
+"Neptuno":"Tritón|Gran Mancha Oscura|Anillos de Neptuno|Voyager 2",
+"Plutón":"Caronte|New Horizons|Región Tombaugh|Cinturón de Kuiper",
+"Exoplanetas":"Próxima b|Sistema TRAPPIST-1|Telescopio Kepler|Telescopio James Webb",
+"ChatGPT":"GPT-5|Modo de voz|Búsqueda en ChatGPT|OpenAI",
+"Claude":"Claude Opus|Claude Sonnet|Claude Haiku|Claude Code",
+"Gemini":"Gemini Pro|Gemini Flash|Gemini Live|NotebookLM",
+"Copilot":"GitHub Copilot|Copilot en Windows|Copilot en Word|Microsoft 365 Copilot",
+"Midjourney":"Midjourney V7|Midjourney en Discord|Galería de Midjourney|Prompts para Midjourney",
+"Perplexity":"Perplexity Pro|Búsqueda con fuentes|Modo Investigación|Perplexity Comet",
+"Llama":"Llama 3|Llama 4|Meta AI|Ollama",
+"DeepSeek":"DeepSeek-V3|DeepSeek-R1|App de DeepSeek|DeepSeek Coder",
+"Suno":"Crear canciones|Letras con IA|Suno Studio|Comunidad de Suno",
+"Stable Diffusion":"Stability AI|ComfyUI|Automatic1111|Hugging Face"
+};
+var app=document.getElementById("app");
+function sub(k,i){
+var c=CATS[k],it=c.items[i];
+if(!it){home();return}
+var names=(SUB[it[0]]||"").split("|").filter(Boolean);
+app.innerHTML='<a class="back" href="#'+k+'">← Volver a '+esc(c.n)+'</a><div class="page-title"><b>'+c.e+'</b><h2>'+esc(it[0])+'</h2></div><p class="path">'+esc(c.n)+' › '+esc(it[0])+'</p><p class="lead">'+esc(it[1])+'</p><div class="grid">'+names.map(function(n){return '<a class="item" target="_blank" rel="noopener" href="https://www.google.com/search?q='+encodeURIComponent(n+" "+it[0])+'"><h3>'+esc(n)+'</h3><p>Buscar en Google</p></a>'}).join("")+'</div>';
+}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function norm(s){return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")}
+function itemHtml(it,key,link){var i=CATS[key].items.indexOf(it);return '<a class="item" href="#'+key+'-'+i+'" style="--cat:'+CATS[key].c+'"><h3>'+esc(it[0])+'</h3><p>'+esc(it[1])+'</p>'+(link?'<small>'+esc(CATS[key].n)+'</small>':'')+'</a>'}
+function home(){
+var p=Object.keys(CATS).map(function(k,i){var c=CATS[k];return '<a class="planet" href="#'+k+'" style="--i:'+i+'"><span>'+c.e+'</span>'+esc(c.n)+'<small>'+c.items.length+' ideas</small></a>'}).join("");
+app.innerHTML='<h1>Explora todo en un solo lugar.</h1><p class="lead">Elige un planeta o escribe lo que buscas: deportes, lugares, comidas, videojuegos y empresas.</p><input type="search" id="q" placeholder="Buscar en Universe" aria-label="Buscar en Universe"><div class="results" id="res"></div><nav class="planets" id="pl">'+p+'</nav>';
+var q=document.getElementById("q"),res=document.getElementById("res"),pl=document.getElementById("pl");
+q.addEventListener("input",function(){
+var t=norm(q.value.trim());
+if(!t){res.innerHTML="";pl.style.display="";return}
+pl.style.display="none";
+var out="";
+Object.keys(CATS).forEach(function(k){CATS[k].items.forEach(function(it){if(norm(it[0]+" "+it[1]).indexOf(t)>-1)out+=itemHtml(it,k,true)})});
+res.innerHTML=out||'<p class="empty">No hay resultados. Prueba con otra palabra.</p>';
+});
+}
+function cat(k){
+var c=CATS[k];
+app.innerHTML='<a class="back" href="#">← Volver a Universe</a><div class="page-title"><b>'+c.e+'</b><h2>'+esc(c.n)+'</h2></div><p class="lead">'+esc(c.d)+'</p><input type="search" id="q" placeholder="Buscar en '+esc(c.n)+'" aria-label="Buscar en '+esc(c.n)+'"><div class="grid" id="g"></div>';
+var g=document.getElementById("g"),q=document.getElementById("q");
+function draw(){var t=norm(q.value.trim());var out=c.items.filter(function(it){return norm(it[0]+" "+it[1]).indexOf(t)>-1}).map(function(it){return itemHtml(it,k,false)}).join("");g.innerHTML=out||'<p class="empty">No hay resultados. Prueba con otra palabra.</p>'}
+q.addEventListener("input",draw);draw();
+}
+var QS=[
+["El agua es el principio de todas las cosas.","Tales de Mileto"],
+["Así como nuestra alma, que es aire, nos mantiene unidos, el aire envuelve a todo el mundo.","Anaxímenes"],
+["Todas las cosas son número.","Pitágoras"],
+["Nadie se baña dos veces en el mismo río.","Heráclito"],
+["El carácter del hombre es su destino.","Heráclito"],
+["Este cosmos, el mismo para todos, no lo creó ningún dios ni ningún hombre: siempre fue, es y será.","Heráclito"],
+["En todas las cosas hay una parte de todas las cosas.","Anaxágoras"],
+["Por convención hay dulce y amargo; en realidad, solo átomos y vacío.","Demócrito"],
+["La felicidad no habita en las posesiones, sino en el alma.","Demócrito"],
+["Una vida sin examen no merece ser vivida.","Sócrates"],
+["El único bien es el conocimiento y el único mal es la ignorancia.","Sócrates"],
+["El asombro es el comienzo de la filosofía.","Platón"],
+["El primero y mejor de todos los triunfos es vencerse a uno mismo.","Platón"],
+["Todos los hombres desean por naturaleza saber.","Aristóteles"],
+["El hombre es por naturaleza un animal político.","Aristóteles"]];
+function why(){
+app.innerHTML='<a class="back" href="#">← Volver a Universe</a><div class="page-title"><b>◇</b><h2>¿Por qué Universe?</h2></div><p class="manifesto">Universe, porque está lo que quieres descubrir en un solo lugar. Y aunque esto esté hecho con un pedazo de IA, siempre conservará algo humano, como el universo. Nuestro planeta está en este universo, y ¿qué hay ahí? Pues nosotros, y siempre queda algo nuestro.</p><h2 class="sub">Palabras de filósofos griegos</h2>'+QS.map(function(q){return '<div class="q"><p>“'+esc(q[0])+'”</p><cite>'+esc(q[1])+'</cite></div>'}).join("")+'<p class="path">Traducciones libres. Las frases de los filósofos más antiguos se conservan en fragmentos o citadas por otros autores.</p>';
+}
+function show(k){
+if(k==="porque"){why();window.scrollTo(0,0);return}
+var m=/^([a-z]+)-(\d+)$/.exec(k);
+if(m&&CATS[m[1]])sub(m[1],+m[2]);else if(CATS[k])cat(k);else home();
+window.scrollTo(0,0);
+}
+function route(){show(decodeURIComponent(location.hash.replace("#","")))}
+document.addEventListener("click",function(e){
+var a=e.target.closest&&e.target.closest('a[href^="#"]');
+if(!a)return;
+e.preventDefault();
+var k=a.getAttribute("href").slice(1);
+try{history.replaceState(null,"","#"+k)}catch(x){}
+show(k);
+});
+window.addEventListener("hashchange",route);route();
+document.getElementById("theme").addEventListener("click",function(){
+var r=document.documentElement;
+var dark=r.getAttribute("data-theme")!=="light";
+r.setAttribute("data-theme",dark?"light":"dark");
+});
+</script>
+</body>
+</html>
