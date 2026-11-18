@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Universe</title>
+<meta name="google-site-verification" content="ZJ305fP6hbclocZ-QFZeFuYY5oH1sxPs7SO-Ni51Lig" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Playfair+Display:ital,wght@1,500&family=Unbounded:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--ink:#f5f5f7;--mute:#9a9aa5;--card:#0e0e12;--line:#24242c;
+--c1:#f5f5f7;--c2:#f5f5f7;--c3:#f5f5f7;--c4:#f5f5f7;--c5:#f5f5f7;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="light"]{--bg:#f5f5f7;--ink:#111114;--mute:#55555f;--card:#ffffff;--line:#dcdce2;--c1:#111114;--c2:#111114;--c3:#111114;--c4:#111114;--c5:#111114}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Lora,Georgia,"Times New Roman",serif;line-height:1.55;min-height:100vh}
+.wrap{max-width:960px;margin:0 auto;padding:28px 20px 60px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-weight:800;font-size:1.05rem;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:10px}
+.logo i{width:22px;height:22px;border-radius:50%;background:var(--c4);position:relative;display:inline-block}
+.logo i::after{content:"";position:absolute;left:-5px;top:9px;width:32px;height:4px;border-radius:4px;background:var(--c3);transform:rotate(-20deg)}
+h1{font-size:clamp(2.4rem,8vw,4.4rem);line-height:1.05;margin:44px 0 12px;font-weight:700;letter-spacing:-.01em;background:linear-gradient(90deg,var(--ink),var(--mute),var(--ink));background-size:200% auto;animation:shine 7s linear infinite;-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--mute);max-width:46ch;margin:0 0 24px}
+input[type=search]{width:100%;max-width:460px;padding:14px 18px;border-radius:999px;border:2px solid var(--line);background:var(--card);color:var(--ink);font:inherit}
+input[type=search]:focus,a:focus-visible,button:focus-visible{outline:3px solid var(--c5);outline-offset:3px}
+.planets{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px;margin-top:36px}
+.planet{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;aspect-ratio:1;border-radius:50%;color:var(--ink);background:var(--card);border:1px solid var(--line);text-decoration:none;font-weight:600;font-size:1rem;padding:14px;transition:transform .2s,filter .2s;animation:pop .6s cubic-bezier(.2,.9,.3,1.3) backwards,float 5s ease-in-out infinite;animation-delay:calc(var(--i,0)*.1s),calc(var(--i,0)*-1s)}
+.planet:hover{transform:translateY(-6px) scale(1.06);border-color:var(--ink);box-shadow:0 0 40px -10px var(--ink)}
+.planet span{font-size:2.2rem;line-height:1.1}
+.planet small{font-weight:400;opacity:.9;font-size:.78rem}
+.results{margin-top:28px;display:grid;gap:10px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;transition:transform .2s,border-color .2s;animation:up .45s backwards}
+.item h3{margin:0 0 4px;font-size:1.05rem}
+.item p{margin:0;color:var(--mute);font-size:.93rem}
+.item a{color:var(--c5);font-size:.85rem;text-decoration:none;font-weight:600}
+.back{display:inline-block;margin:34px 0 0;color:var(--mute);text-decoration:none;font-weight:600}
+.page-title{display:flex;align-items:center;gap:16px;margin:14px 0 8px}
+.page-title b{width:64px;height:64px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-size:1.9rem;flex:none}
+.page-title h2{font-size:clamp(1.9rem,6vw,3rem);margin:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:22px}
+.grid .item{border-top:1px solid var(--line)}
+.empty{color:var(--mute);margin-top:20px}
+.item{display:block;color:inherit;text-decoration:none}
+.item small{color:var(--mute);font-size:.8rem}
+.path{color:var(--mute);font-size:.85rem;margin:0 0 8px}
+.why{display:inline-block;margin-bottom:28px;padding:12px 28px;border:1px solid var(--ink);border-radius:999px;color:var(--ink);text-decoration:none;font-weight:600;font-size:.95rem;transition:background .2s,color .2s}
+.why:hover{background:var(--ink);color:var(--bg)}
+.manifesto{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:clamp(1.3rem,4.5vw,1.9rem);line-height:1.5;max-width:640px;margin:18px 0 0}
+.sub{font-size:1.4rem;margin:48px 0 20px}
+.q{border-left:2px solid var(--line);padding:2px 0 2px 16px;margin:0 0 20px;max-width:640px}
+.q p{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:1.2rem;line-height:1.4;margin:0 0 4px}
+.q cite{color:var(--mute);font-size:.85rem;font-style:normal}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:radial-gradient(1.5px 1.5px at 20px 30px,#fff,transparent),radial-gradient(1px 1px at 90px 140px,#fff,transparent),radial-gradient(1.5px 1.5px at 160px 70px,#fff,transparent),radial-gradient(1px 1px at 230px 190px,#fff,transparent);background-size:260px 230px;opacity:.5;animation:twinkle 6s ease-in-out infinite alternate}
+@keyframes twinkle{from{opacity:.2}to{opacity:.65}}
+@keyframes pop{from{opacity:0;scale:.5}}
+@keyframes float{50%{translate:0 -10px}}
+@keyframes up{from{opacity:0;translate:0 14px}}
+@keyframes shine{to{background-position:200% center}}
+@keyframes drift{to{translate:40vw 20vh}}
+body::after{content:"";position:fixed;width:60vmax;height:60vmax;left:-20vmax;top:-30vmax;z-index:-1;pointer-events:none;background:radial-gradient(circle,rgba(255,255,255,.07),transparent 65%);animation:drift 18s ease-in-out infinite alternate}
+:root[data-theme="light"] body::before,:root[data-theme="light"] body::after{display:none}
+.item:hover{transform:translateY(-4px);border-color:var(--cat,var(--line))}
+footer{margin-top:60px;text-align:center;color:var(--mute);font-size:.8rem}
+footer p{margin:0 0 14px;color:var(--ink);font-size:.95rem}
+.corner{position:fixed;right:14px;bottom:calc(10px + env(safe-area-inset-bottom,0px));font-size:.75rem;color:var(--mute);letter-spacing:.05em;pointer-events:none;z-index:5}
+h1,h2{font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:500}
+.logo{font-family:Unbounded,Inter,sans-serif;font-style:normal;font-weight:700}
+@media (prefers-reduced-motion:reduce){*,body::before,body::after{animation:none!important;transition:none!important}}
+button.theme{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font:inherit;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<a class="logo" href="#"><i></i>Universe</a>
+<button class="theme" id="theme" type="button">Cambiar tema</button>
+</header>
+<main id="app"></main>
+<div class="corner">◇C.E.</div>
+<footer><div><a class="why" href="#porque">¿Por qué Universe?</a></div><p>Everything you want to discover, in one place.<br>Todo lo que quieres descubrir, en un solo lugar.</p>© 2026 Universe</footer>
+</div>
+<script>
+var CATS={
+deportes:{n:"Deportes",e:"⚽",c:"var(--c1)",d:"Disciplinas para ver y practicar.",items:[
+["Fútbol","El deporte más popular del mundo: dos equipos de once jugadores."],
+["Baloncesto","Se juega con canastas a 3,05 metros de altura. Nació en 1891."],
+["Tenis","Individual o dobles, en cancha de arcilla, césped o dura."],
+["Natación","Cuatro estilos: libre, espalda, pecho y mariposa."],
+["Ciclismo","Ruta, pista y montaña. El Tour de Francia es su gran carrera."],
+["Béisbol","Bate, bola y bases. Muy popular en América y Japón."],
+["Voleibol","Dos equipos separados por una red; gana quien deja caer el balón en el campo rival."],
+["Atletismo","Carreras, saltos y lanzamientos: la base de los Juegos Olímpicos."],
+["Boxeo","Combate por rondas con guantes que exige técnica y resistencia."],
+["Golf","Se embocan pelotas en 18 hoyos con el menor número de golpes."]]},
+lugares:{n:"Lugares para visitar",e:"🌍",c:"var(--c2)",d:"Destinos para tu próxima aventura.",items:[
+["Machu Picchu, Perú","Ciudad inca del siglo XV, en lo alto de los Andes."],
+["París, Francia","La Torre Eiffel, el Louvre y los cafés junto al Sena."],
+["Kioto, Japón","Más de mil templos y barrios de casas tradicionales."],
+["Nueva York, EE. UU.","Central Park, Broadway y rascacielos en cada esquina."],
+["Cancún, México","Playas de arena blanca y ruinas mayas cercanas."],
+["Roma, Italia","El Coliseo, el Vaticano y mucha historia a pie."],
+["Santorini, Grecia","Casas blancas y cúpulas azules frente al mar Egeo."],
+["Río de Janeiro, Brasil","Las playas de Copacabana e Ipanema y el Cristo Redentor."],
+["Dubái, Emiratos Árabes","Rascacielos como el Burj Khalifa y desierto a minutos."],
+["Islandia","Volcanes, cascadas, géiseres y auroras boreales."]]},
+comidas:{n:"Comidas",e:"🍕",c:"var(--c3)",d:"Platos de distintos rincones del mundo.",items:[
+["Tacos","Tortilla de maíz con carne, cebolla, cilantro y salsa."],
+["Sushi","Arroz avinagrado con pescado, mariscos o verduras."],
+["Pizza","Masa horneada con tomate y queso. Nació en Nápoles."],
+["Paella","Arroz con azafrán, típico de Valencia, España."],
+["Ceviche","Pescado crudo marinado en limón, plato clásico de Perú."],
+["Arepas","Panecillos de maíz rellenos, típicos de Venezuela y Colombia."],
+["Hamburguesa","Carne en pan con queso y vegetales, clásico de EE. UU."],
+["Ramen","Fideos en caldo caliente con huevo y cerdo, de Japón."],
+["Empanadas","Masa rellena, horneada o frita, típica de toda Latinoamérica."],
+["Lasaña","Capas de pasta, carne, salsa y queso gratinado, de Italia."]]},
+videojuegos:{n:"Videojuegos",e:"🎮",c:"var(--c4)",d:"Títulos para jugar solo o en grupo.",items:[
+["Minecraft","Construye y explora un mundo de bloques sin límites."],
+["The Legend of Zelda","Aventura y puzles en el reino de Hyrule."],
+["EA
